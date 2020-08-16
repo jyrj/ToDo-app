@@ -9,6 +9,8 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS']=False
 db = SQLAlchemy(app)
 #going to flask migrate
 
+migrate = Migrate(app, db)
+
 class Todo(db.Model):
     __tablename__= 'todos'
     id = db.Column(db.Integer, primary_key=True)
