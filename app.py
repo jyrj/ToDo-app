@@ -7,6 +7,7 @@ app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI']= 'postgresql://postgres:1234@localhost:5432/todo'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS']=False
 db = SQLAlchemy(app)
+#going to flask migrate
 
 class Todo(db.Model):
     __tablename__= 'todos'
