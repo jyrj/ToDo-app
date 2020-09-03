@@ -70,8 +70,8 @@ if __name__=='__main__':
 
     dfskjkj 
     srfeadkllkj
-     lkesf lambda ea
-      2
+     lkesf lambda e
+      
       
          
        
