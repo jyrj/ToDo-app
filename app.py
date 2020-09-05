@@ -4,7 +4,7 @@ from flask_migrate import Migrate
 import sys
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://amy@localhost:5432/todoapp'
+app.config['SQLALCHEMY_DATABASE_URI']= 'postgresql://jyrj:1234@localhost:5432/todo'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
@@ -14,9 +14,18 @@ class Todo(db.Model):
   id = db.Column(db.Integer, primary_key=True)
   description = db.Column(db.String(), nullable=False)
   completed = db.Column(db.Boolean, nullable=False)
+  list_id = db.Column(db.Integer, db.ForeignKey('todolists.id'), nullable=False)
 
   def __repr__(self):
-    return f'<Todo {self.id} {self.description}>'
+    return f'<Todo {self.id} {self.description}>' 
+    
+
+class TodoList(db.Model):
+      __tablename__ = 'todolists'
+      id = db.Column(db.Integer, primary_key= True)
+      name = db.Column(db.String(), nullable= False)
+      todolist = db.relationship('Todo', backref= 'list', lazy= True)
+
 
 @app.route('/todos/<todo_id>', methods=['DELETE'])
 def delete_todo(todo_id):
@@ -72,3 +81,6 @@ def set_completed_todo(todo_id):
 @app.route('/')
 def index():
   return render_template('index.html', todos=Todo.query.order_by('id').all())
+
+if __name__ == '__main__':
+  app.run(debug=True)
